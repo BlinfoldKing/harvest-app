@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_dotenv: ^2.1.0
+  flutter_svg: ^0.18.1
+  outline_material_icons: ^0.1.1
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,8 +48,38 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - .env
+    - assets/images/background_1.png
+    - assets/images/background_2.png
+    - assets/images/LogoDarkBg.png
+    - assets/images/LogoLightBg.png
+    - assets/images/Analytics.png
+    - assets/images/Awards.png
+    - assets/images/background_1.png
+    - assets/images/background_2.png
+    - assets/images/Build.png
+    - assets/images/Coding.png
+    - assets/images/Courier.png
+    - assets/images/Customize.png
+    - assets/images/Data.png
+    - assets/images/Designer.png
+    - assets/images/e-Commerce.png
+    - assets/images/Error.png
+    - assets/images/Finance.png
+    - assets/images/InstagramShot.png
+    - assets/images/Location.png
+    - assets/images/Messages.png
+    - assets/images/Money.png
+    - assets/images/NoComments.png
+    - assets/images/NoMessage.png
+    - assets/images/Presentation.png
+    - assets/images/ProductLaunch.png
+    - assets/images/Search.png
+    - assets/images/Selfie.png
+    - assets/images/Service.png
+    - assets/images/Shopping.png
+    - assets/images/Support.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
