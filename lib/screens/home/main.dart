@@ -12,9 +12,19 @@ class Homepage extends StatefulWidget {
 }
 
 class _Homepage extends State<Homepage> {
+  bool _showNavbar = false;
+
   @override
   Widget build(BuildContext context) {
     return SwipeableScaffold(
+      onTransition: (page, update) {
+        if (page == 0) {
+          update(enableAppBar: false);
+        } else {
+          update(enableAppBar: true);
+        }
+      },
+      enableAppBar: this._showNavbar,
       items: [
         generateNavItem(icon: OMIcons.home, text: 'Beranda'),
         generateNavItem(icon: OMIcons.creditCard, text: 'Transaksi'),
