@@ -4,12 +4,12 @@ import 'package:harvest_app/utils/formatMoney.dart';
 import 'package:harvest_app/utils/theme.dart';
 
 class BalanceCard extends StatelessWidget {
-  int currBalance;
-  int currPoint;
-  int currInvest;
+  final int currBalance;
+  final int currPoint;
+  final int currInvest;
 
-  Function() onPayPressed;
-  Function() onTopUpPressed;
+  final Function() onPayPressed;
+  final Function() onTopUpPressed;
 
   BalanceCard(
       {this.currBalance,
@@ -26,7 +26,7 @@ class BalanceCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(3),
         color: Colors.white,
       ),
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.only(top: 5, left: 15, right: 15, bottom: 15),
       child: Column(
         children: [
           Row(
