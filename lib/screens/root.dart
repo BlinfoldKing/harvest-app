@@ -43,9 +43,15 @@ class _Root extends State<Root> {
     return MaterialApp(
       title: 'Harvest',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+          backgroundColor: Colors.white,
+          primarySwatch: Colors.purple,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: TextTheme(
+            bodyText1: TextStyle(color: HarvestTheme.black),
+            bodyText2: TextStyle(color: HarvestTheme.black),
+          ).apply(
+            bodyColor: HarvestTheme.black,
+          )),
       home: SafeArea(
         child: content,
       ),

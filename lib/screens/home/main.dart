@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_app/screens/home/dashboard.dart';
+import 'package:harvest_app/screens/home/transaction.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import '../../components/general/swipeableScaffold.dart';
 
@@ -31,9 +32,10 @@ class _Homepage extends State<Homepage> {
         generateNavItem(icon: OMIcons.book, text: 'Edukasi'),
         generateNavItem(icon: OMIcons.person, text: 'Akunku'),
       ],
+      titles: ['Beranda', 'Transaksi', 'Edukasi', 'Akunku'],
       pages: [
         Dashboard(),
-        Text('0'),
+        Transaction(),
         Text('0'),
         Text('0'),
       ],

@@ -5,6 +5,7 @@ import 'package:harvest_app/utils/theme.dart';
 class SwipeableScaffold extends StatefulWidget {
   final List<BottomNavigationBarItem> items;
   final List<Widget> pages;
+  final List<String> titles;
   final Function(int) onIndex;
   final Function(int page, Function({bool enableAppBar}) update) onTransition;
   final bool enableAppBar;
@@ -15,6 +16,7 @@ class SwipeableScaffold extends StatefulWidget {
     this.onIndex,
     this.enableAppBar,
     this.onTransition,
+    this.titles,
   });
 
   @override
@@ -24,12 +26,14 @@ class SwipeableScaffold extends StatefulWidget {
         enableAppBar: this.enableAppBar,
         onIndex: this.onIndex,
         onTransition: this.onTransition,
+        titles: this.titles,
       );
 }
 
 class _SwipeableScaffold extends State<SwipeableScaffold> {
   final List<BottomNavigationBarItem> items;
   final List<Widget> pages;
+  final List<String> titles;
   final Function(int) onIndex;
   final Function(int page, Function({bool enableAppBar}) update) onTransition;
 
@@ -52,19 +56,21 @@ class _SwipeableScaffold extends State<SwipeableScaffold> {
     });
   }
 
-  _SwipeableScaffold(
-      {this.items,
-      this.pages,
-      this.onIndex,
-      this.enableAppBar,
-      this.onTransition});
+  _SwipeableScaffold({
+    this.items,
+    this.pages,
+    this.onIndex,
+    this.enableAppBar,
+    this.onTransition,
+    this.titles,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: this.enableAppBar
           ? HarvestAppBar(
-              title: 'hello world',
+              title: this.titles[this._page],
             )
           : null,
       bottomNavigationBar: BottomNavigationBar(

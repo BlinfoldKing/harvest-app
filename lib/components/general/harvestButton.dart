@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:harvest_app/utils/theme.dart';
 
 class HarvestButton extends StatelessWidget {
-  Function() onPressed;
-  Widget child;
-  Color color;
-  Color textColor;
-  Color borderColor;
+  final Function() onPressed;
+  final Widget child;
+  final Color color;
+  final Color textColor;
+  final Color borderColor;
 
-  HarvestButton({this.onPressed, this.child, this.color, this.textColor});
+  HarvestButton({
+    this.onPressed,
+    this.child,
+    this.color,
+    this.textColor,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
