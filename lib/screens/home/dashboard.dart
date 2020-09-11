@@ -3,6 +3,7 @@ import 'package:harvest_app/screens/goals/main.dart';
 import 'package:harvest_app/components/home/BalanceCard.dart';
 import 'package:harvest_app/components/home/GoalCard.dart';
 import 'package:harvest_app/screens/invest/main.dart';
+import 'package:harvest_app/screens/topUp/main.dart';
 import 'package:harvest_app/utils/illustration.dart';
 import 'package:harvest_app/utils/theme.dart';
 
@@ -54,7 +55,14 @@ class _Dashboard extends State<Dashboard> {
                       currInvest: 3000000,
                       currPoint: 3000000,
                       onPayPressed: () {},
-                      onTopUpPressed: () {},
+                      onTopUpPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TopUp(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
