@@ -5,15 +5,21 @@ import 'package:outline_material_icons/outline_material_icons.dart';
 import '../../components/general/swipeableScaffold.dart';
 
 class Homepage extends StatefulWidget {
-  Homepage({Key key, this.title}) : super(key: key);
+  bool showPopUp = false;
+
+  Homepage({Key key, this.title, this.showPopUp}) : super(key: key);
   final String title;
 
   @override
-  _Homepage createState() => _Homepage();
+  _Homepage createState() => _Homepage(showPopUp: this.showPopUp);
 }
 
 class _Homepage extends State<Homepage> {
   bool _showNavbar = false;
+
+  bool showPopUp;
+
+  _Homepage({this.showPopUp});
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +40,12 @@ class _Homepage extends State<Homepage> {
       ],
       titles: ['Beranda', 'Transaksi', 'Edukasi', 'Akunku'],
       pages: [
-        Dashboard(),
+        Dashboard(
+          showPopUp: this.showPopUp != null ? this.showPopUp : false,
+        ),
         Transaction(),
-        Text('0'),
-        Text('0'),
+        Text('not implemented'),
+        Text('not implemented'),
       ],
     );
   }

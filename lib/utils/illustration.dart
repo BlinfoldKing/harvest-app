@@ -29,4 +29,8 @@ class Illustration {
   static Widget support = Image.asset('assets/images/Support.png');
   static Widget logoDarkBg = Image.asset('assets/images/LogoDarkBg.png');
   static Widget logoLightBg = Image.asset('assets/images/LogoLightBg.png');
+
+  static Widget demograph = Image.asset('assets/images/demograph.png');
+  static Widget demodata = Image.asset('assets/images/demodata.png');
+  static Widget topup = Image.asset('assets/images/topup.png');
 }

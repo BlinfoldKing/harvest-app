@@ -4,6 +4,12 @@ import 'package:harvest_app/utils/theme.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class GoalCard extends StatelessWidget {
+  Function(String) onDeposit = (id) {};
+
+  final String id;
+
+  GoalCard({this.id, this.onDeposit});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,7 +79,9 @@ class GoalCard extends StatelessWidget {
                 ),
                 HarvestButton(
                   child: Text('Deposit'),
-                  onPressed: () {},
+                  onPressed: () {
+                    this.onDeposit(this.id);
+                  },
                 )
               ],
             ),

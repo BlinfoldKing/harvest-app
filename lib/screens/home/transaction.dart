@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:harvest_app/components/home/IncomeCard.dart';
 import 'package:harvest_app/components/home/TransactionList.dart';
 import 'package:harvest_app/components/general/toggleButton.dart';
+import 'package:harvest_app/utils/theme.dart';
 
 class Transaction extends StatefulWidget {
   @override
@@ -63,6 +65,10 @@ class _Transaction extends State<Transaction> {
                       margin: EdgeInsets.only(right: 14),
                       child: HarvestToogleButton(
                         child: Text('Pemasukan'),
+                        color: HarvestTheme.ligthViolet,
+                        inActiveColor: Colors.white,
+                        textColor: HarvestTheme.darkPurple,
+                        borderColor: HarvestTheme.darkPurple,
                         onPressed: () {
                           setState(() {
                             this._state = _TransactionState.INCOME;
@@ -74,6 +80,10 @@ class _Transaction extends State<Transaction> {
                   ),
                   Expanded(
                     child: HarvestToogleButton(
+                      color: HarvestTheme.ligthViolet,
+                      inActiveColor: Colors.white,
+                      textColor: HarvestTheme.darkPurple,
+                      borderColor: HarvestTheme.darkPurple,
                       child: Text('Pengeluaran'),
                       onPressed: () {
                         setState(() {

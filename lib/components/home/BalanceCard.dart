@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_app/components/general/harvestButton.dart';
 import 'package:harvest_app/utils/formatMoney.dart';
+import 'package:harvest_app/utils/illustration.dart';
 import 'package:harvest_app/utils/theme.dart';
 
 class BalanceCard extends StatelessWidget {
@@ -35,7 +36,10 @@ class BalanceCard extends StatelessWidget {
               Text('Saldo Akun'),
               HarvestButton(
                 onPressed: () {},
-                child: Text('Bayar'),
+                child: Text(
+                  'Bayar',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
               )
             ],
           ),
@@ -52,6 +56,13 @@ class BalanceCard extends StatelessWidget {
                           TextStyle(fontWeight: FontWeight.bold, fontSize: 34)),
                 ],
               ),
+              Spacer(
+                flex: 1,
+              ),
+              InkWell(
+                onTap: this.onTopUpPressed,
+                child: Illustration.topup,
+              )
             ],
           ),
           Divider(

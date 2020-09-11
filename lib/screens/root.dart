@@ -46,6 +46,7 @@ class _Root extends State<Root> {
           backgroundColor: Colors.white,
           primarySwatch: Colors.purple,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          fontFamily: 'NotoSans',
           textTheme: TextTheme(
             bodyText1: TextStyle(color: HarvestTheme.black),
             bodyText2: TextStyle(color: HarvestTheme.black),

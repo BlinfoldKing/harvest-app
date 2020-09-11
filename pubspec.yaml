@@ -27,6 +27,7 @@ dependencies:
   flutter_svg: ^0.18.1
   outline_material_icons: ^0.1.1
   percent_indicator: ^2.1.6
+  pinput: ^0.2.5
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -81,6 +82,13 @@ flutter:
     - assets/images/Service.png
     - assets/images/Shopping.png
     - assets/images/Support.png
+    - assets/images/demograph.png
+    - assets/images/demodata.png
+    - assets/images/topup.png
+    - assets/fonts/NotoSans/NotoSans-Regular.ttf
+    - assets/fonts/NotoSans/NotoSans-Italic.ttf
+    - assets/fonts/NotoSans/NotoSans-Bold.ttf
+    - assets/fonts/NotoSans/NotoSans-BoldItalic.ttf
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -94,7 +102,17 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: NotoSans
+      fonts:
+        - asset: assets/fonts/NotoSans/NotoSans-Regular.ttf
+        - asset: assets/fonts/NotoSans/NotoSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/NotoSans/NotoSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/NotoSans/NotoSans-BoldItalic.ttf
+          weight: 700
+          style: italic
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
