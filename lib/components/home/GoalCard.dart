@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_app/components/general/harvestButton.dart';
+import 'package:harvest_app/utils/formatMoney.dart';
 import 'package:harvest_app/utils/theme.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -7,8 +8,20 @@ class GoalCard extends StatelessWidget {
   Function(String) onDeposit = (id) {};
 
   final String id;
+  final String title;
+  final int curr;
+  final int target;
+  final int timeVal;
+  final String timeUnit;
 
-  GoalCard({this.id, this.onDeposit});
+  GoalCard(
+      {this.id,
+      this.onDeposit,
+      this.title,
+      this.curr,
+      this.target,
+      this.timeUnit,
+      this.timeVal});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +46,7 @@ class GoalCard extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(bottom: 5),
             child: Text(
-              'Kuliah di Stanford University',
+              this.title != null ? this.title : 'Unknown',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 14,
@@ -41,7 +54,7 @@ class GoalCard extends StatelessWidget {
             ),
           ),
           Text(
-            '4 tahun dari sekarang',
+            '$timeVal $timeUnit dari sekarang',
             style: TextStyle(color: Color(0xa3212e40), fontSize: 10),
           ),
           Container(
@@ -50,13 +63,13 @@ class GoalCard extends StatelessWidget {
               // width: 140.0,
               lineHeight: 5.0,
               padding: EdgeInsets.symmetric(horizontal: 0),
-              percent: 0.5,
+              percent: this.curr / this.target,
               backgroundColor: HarvestTheme.lightbg,
               progressColor: HarvestTheme.success,
             ),
           ),
           Text(
-            'Rp. 300.676/Rp.70.000.000',
+            'Rp. ' + formatMoney(this.curr) + '/' + formatMoney(this.target),
             style: TextStyle(color: Color(0xa3212e40), fontSize: 10),
           ),
           Container(

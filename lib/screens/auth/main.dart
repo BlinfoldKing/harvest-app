@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:harvest_app/screens/auth/register.dart';
 import 'login.dart';
 
 enum AuthNavState {
@@ -9,35 +10,32 @@ const LOGIN = 'login';
 const REGISTER = 'register';
 
 class Auth extends StatefulWidget {
+  final AuthNavState state;
   final Function(String token) handleToken;
 
-  Auth(this.handleToken);
+  Auth({this.handleToken, this.state});
 
   @override
-  _Auth createState() => _Auth();
+  _Auth createState() => _Auth(state: this.state);
 }
 
 class _Auth extends State<Auth> {
-  AuthNavState _pageState = AuthNavState.LOGIN;
+  AuthNavState state = AuthNavState.LOGIN;
 
-  void _toLogin() {
-    setState(() {
-      this._pageState = AuthNavState.LOGIN;
-    });
-  }
-
-  void _toRegister() {
-    setState(() {
-      this._pageState = AuthNavState.REGISTER;
-    });
-  }
+  _Auth({this.state});
 
   @override
   Widget build(BuildContext context) {
-    if (this._pageState == AuthNavState.LOGIN) {
+    if (this.state == AuthNavState.LOGIN) {
       return Scaffold(
-        body: Text('hello word'),
+        body: Login(),
       );
     }
+
+    return Scaffold(
+      body: SafeArea(
+        child: Register(),
+      ),
+    );
   }
 }

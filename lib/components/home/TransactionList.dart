@@ -10,6 +10,9 @@ class TransactionList extends StatelessWidget {
     this.items,
   });
 
+  var date = DateTime.now().day;
+  var year = DateTime.now().year;
+
   @override
   build(BuildContext context) {
     return Column(
@@ -19,7 +22,7 @@ class TransactionList extends StatelessWidget {
           padding: EdgeInsets.all(3),
           color: HarvestTheme.light,
           child: Text(
-            '23 agustus 2020',
+            '$date September $year',
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,

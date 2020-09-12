@@ -1,4 +1,6 @@
 String formatMoney(int money) {
+  if (money == 0) return '0';
+
   String res = '';
   while (money > 9) {
     int rem = money % 1000;

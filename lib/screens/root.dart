@@ -14,7 +14,7 @@ class Root extends StatefulWidget {
 }
 
 class _Root extends State<Root> {
-  String _userToken = 'aa';
+  String _userToken = '';
   RootState _rootState = RootState.HOME;
 
   void _setToken(String token) {
@@ -29,22 +29,28 @@ class _Root extends State<Root> {
     if (this._userToken == '') {
       this._rootState = RootState.AUTH;
 
-      content = Auth(this._setToken);
+      content = Auth(
+        state: AuthNavState.LOGIN,
+        handleToken: this._setToken,
+      );
     }
 
     switch (this._rootState) {
       case RootState.HOME:
-        content = Homepage(title: 'hello world');
+        content = Homepage();
         break;
       default:
-        content = Auth(this._setToken);
+        content = Auth(
+          state: AuthNavState.LOGIN,
+          handleToken: this._setToken,
+        );
     }
 
     return MaterialApp(
       title: 'Harvest',
       theme: ThemeData(
           backgroundColor: Colors.white,
-          primarySwatch: Colors.purple,
+          primaryColor: HarvestTheme.purple,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           fontFamily: 'NotoSans',
           textTheme: TextTheme(

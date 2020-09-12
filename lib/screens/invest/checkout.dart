@@ -2,22 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:harvest_app/components/general/appBar.dart';
 import 'package:harvest_app/components/general/harvestButton.dart';
 import 'package:harvest_app/components/general/toggleButton.dart';
+import 'package:harvest_app/entity/goal.dart';
+import 'package:harvest_app/entity/income.dart';
+import 'package:harvest_app/entity/user.dart';
+import 'package:harvest_app/mock/goal.mock.dart';
+import 'package:harvest_app/mock/income.mock.dart';
+import 'package:harvest_app/mock/user.mock.dart';
+import 'package:harvest_app/screens/auth/pin.dart';
 import 'package:harvest_app/screens/home/main.dart';
+import 'package:harvest_app/utils/formatMoney.dart';
 import 'package:harvest_app/utils/theme.dart';
 
 class Checkout extends StatefulWidget {
   final String vendorId;
+  final String goalId;
 
-  Checkout({this.vendorId});
+  Checkout({this.vendorId, this.goalId});
 
   @override
-  _Checkout createState() => _Checkout(vendorId: this.vendorId);
+  _Checkout createState() =>
+      _Checkout(vendorId: this.vendorId, goalId: this.goalId);
 }
 
 class _Checkout extends State<Checkout> {
   final String vendorId;
+  final String goalId;
 
-  _Checkout({this.vendorId});
+  _Checkout({this.vendorId, this.goalId});
 
   var txt = TextEditingController();
 
@@ -26,6 +37,8 @@ class _Checkout extends State<Checkout> {
 
   @override
   Widget build(BuildContext context) {
+    int income = IncomeMock.totalCashback(UserMock.currentLoggedInUser);
+
     return Scaffold(
       appBar: HarvestValidationAppBarWithBack(
         title: 'Beli Produk',
@@ -43,7 +56,7 @@ class _Checkout extends State<Checkout> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Color(0xff212E40).withOpacity(0.42),
-                  width: 0.5,
+                  width: 1,
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -90,7 +103,7 @@ class _Checkout extends State<Checkout> {
               decoration: BoxDecoration(
                 border: Border.all(
                   color: Color(0xff212E40).withOpacity(0.42),
-                  width: 0.5,
+                  width: 1,
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -105,7 +118,7 @@ class _Checkout extends State<Checkout> {
                     ),
                   ),
                   Text(
-                    'Rp 200.000',
+                    'Rp ' + formatMoney(income),
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -265,12 +278,54 @@ class _Checkout extends State<Checkout> {
                     onPressed: () {
                       if (this._amount > 0 && this._agree) {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => Homepage(
-                                showPopUp: true,
-                              ),
-                            ));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Pin(
+                              title: 'Masukan Kode Keamanan',
+                              onDone: (pin) {
+                                UserEntity user = null;
+                                for (int i = 0; i < UserMock.list.length; i++) {
+                                  if (UserMock.list[i].id ==
+                                      UserMock.currentLoggedInUser) {
+                                    user = UserMock.list[i];
+                                    break;
+                                  }
+                                }
+
+                                Goal g = null;
+                                for (int i = 0; i < GoalMock.list.length; i++) {
+                                  if (GoalMock.list[i].id == this.goalId) {
+                                    g = GoalMock.list[i];
+                                    break;
+                                  }
+                                }
+
+                                if (pin == user.pin) {
+                                  if (this._amount <= income) {
+                                    g.currValue += this._amount;
+                                    var i = Income();
+                                    i.userid = UserMock.currentLoggedInUser;
+                                    i.outCashback = this._amount;
+                                    i.title = 'Reksadana HBSC Indonesia';
+                                    IncomeMock.list.add(i);
+                                  }
+
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) {
+                                        return Homepage(
+                                          showPopUp: true,
+                                        );
+                                      },
+                                    ),
+                                    (route) => route.isCurrent,
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        );
                       }
                     },
                     color: HarvestTheme.purple,

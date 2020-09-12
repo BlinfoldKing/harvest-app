@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:harvest_app/mock/goal.mock.dart';
+import 'package:harvest_app/mock/income.mock.dart';
+import 'package:harvest_app/mock/user.mock.dart';
 import 'package:harvest_app/screens/goals/main.dart';
 import 'package:harvest_app/components/home/BalanceCard.dart';
 import 'package:harvest_app/components/home/GoalCard.dart';
 import 'package:harvest_app/screens/invest/main.dart';
+import 'package:harvest_app/screens/payment/main.dart';
 import 'package:harvest_app/screens/topUp/main.dart';
+import 'package:harvest_app/utils/formatMoney.dart';
 import 'package:harvest_app/utils/illustration.dart';
 import 'package:harvest_app/utils/theme.dart';
 
@@ -23,6 +28,12 @@ class _Dashboard extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
+    int cashback = IncomeMock.totalCashback(UserMock.currentLoggedInUser);
+    int income = IncomeMock.totalIncome(UserMock.currentLoggedInUser) -
+        IncomeMock.totalOutcome(UserMock.currentLoggedInUser);
+
+    print(">>>" + formatMoney(income));
+
     return Stack(
       children: [
         ListView(
@@ -51,10 +62,17 @@ class _Dashboard extends State<Dashboard> {
                       ],
                     ),
                     BalanceCard(
-                      currBalance: 1230000,
-                      currInvest: 3000000,
-                      currPoint: 3000000,
-                      onPayPressed: () {},
+                      currBalance: income,
+                      currInvest: 0,
+                      currPoint: cashback,
+                      onPayPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Payment(),
+                          ),
+                        );
+                      },
                       onTopUpPressed: () {
                         Navigator.push(
                           context,
@@ -96,23 +114,40 @@ class _Dashboard extends State<Dashboard> {
                       )
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      GoalCard(
-                        id: 'some-id-1',
-                        onDeposit: (id) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => Invest(
-                                  goalId: id,
-                                ),
-                              ));
-                        },
-                      ),
-                    ],
-                  ),
+                  (GoalMock.list.length > 0
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            for (var g in GoalMock.list.reversed.toList())
+                              GoalCard(
+                                id: g.id,
+                                title: g.title,
+                                curr: g.currValue,
+                                target: g.targetValue,
+                                timeUnit: g.timeUnit,
+                                timeVal: g.timeVal,
+                                onDeposit: (id) {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Invest(
+                                          goalId: id,
+                                        ),
+                                      ));
+                                },
+                              ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Illustration.finance,
+                            Text(
+                              'kamu belum memiliki Goals Menabung wujudkan mimpimu dengan perencanaan sekarang',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        )),
                 ],
               ),
             )

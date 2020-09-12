@@ -27,6 +27,7 @@ class Invest extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (context) => Vendor(
                       vendorId: id,
+                      goalId: this.goalId,
                     ),
                   ),
                 );

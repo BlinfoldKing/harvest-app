@@ -35,7 +35,7 @@ class BalanceCard extends StatelessWidget {
             children: [
               Text('Saldo Akun'),
               HarvestButton(
-                onPressed: () {},
+                onPressed: this.onPayPressed,
                 child: Text(
                   'Bayar',
                   style: TextStyle(fontWeight: FontWeight.w600),

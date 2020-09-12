@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:harvest_app/screens/home/dashboard.dart';
+import 'package:harvest_app/screens/home/education.dart';
+import 'package:harvest_app/screens/home/profile.dart';
 import 'package:harvest_app/screens/home/transaction.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 import '../../components/general/swipeableScaffold.dart';
@@ -8,6 +10,7 @@ class Homepage extends StatefulWidget {
   bool showPopUp = false;
 
   Homepage({Key key, this.title, this.showPopUp}) : super(key: key);
+
   final String title;
 
   @override
@@ -44,8 +47,8 @@ class _Homepage extends State<Homepage> {
           showPopUp: this.showPopUp != null ? this.showPopUp : false,
         ),
         Transaction(),
-        Text('not implemented'),
-        Text('not implemented'),
+        Education(),
+        Profile(),
       ],
     );
   }

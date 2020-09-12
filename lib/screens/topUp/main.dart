@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:harvest_app/components/general/appBar.dart';
 import 'package:harvest_app/components/general/harvestButton.dart';
 import 'package:harvest_app/components/general/toggleButton.dart';
+import 'package:harvest_app/entity/income.dart';
+import 'package:harvest_app/mock/income.mock.dart';
+import 'package:harvest_app/mock/user.mock.dart';
+import 'package:harvest_app/screens/home/main.dart';
+import 'package:harvest_app/utils/formatMoney.dart';
 import 'package:harvest_app/utils/theme.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
 
@@ -17,6 +22,9 @@ class _TopUp extends State<TopUp> {
 
   @override
   Widget build(BuildContext context) {
+    int income = IncomeMock.totalIncome(UserMock.currentLoggedInUser) -
+        IncomeMock.totalOutcome(UserMock.currentLoggedInUser);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: HarvestAppBarWithBack(title: 'Top Up Saldo'),
@@ -55,7 +63,7 @@ class _TopUp extends State<TopUp> {
                           ),
                         ),
                         Text(
-                          'Rp 200.000',
+                          'Rp ' + formatMoney(income),
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -149,7 +157,9 @@ class _TopUp extends State<TopUp> {
                           Expanded(
                             child: TextField(
                               onChanged: (value) {
-                                this._amount = int.tryParse(value);
+                                setState(() {
+                                  this._amount = int.tryParse(value);
+                                });
                               },
                               controller: txt,
                               keyboardType: TextInputType.number,
@@ -244,8 +254,21 @@ class _TopUp extends State<TopUp> {
                 child: Text('Top Up Saldo'),
                 color: HarvestTheme.purple,
                 onPressed: () {
-                  if (this._amount >= 10000)
-                    Navigator.popUntil(context, (route) => route.isFirst);
+                  if (this._amount >= 10000) {
+                    var newIncome = Income();
+                    newIncome.amount = this._amount;
+                    newIncome.title = 'Top Up';
+                    newIncome.userid = UserMock.currentLoggedInUser;
+
+                    IncomeMock.list.add(newIncome);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Homepage(),
+                      ),
+                      (route) => route.isCurrent,
+                    );
+                  }
                 },
               ),
             ),

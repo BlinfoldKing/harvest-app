@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:harvest_app/components/home/IncomeCard.dart';
 import 'package:harvest_app/components/home/TransactionList.dart';
 import 'package:harvest_app/components/general/toggleButton.dart';
+import 'package:harvest_app/mock/income.mock.dart';
+import 'package:harvest_app/mock/user.mock.dart';
 import 'package:harvest_app/utils/theme.dart';
 
 class Transaction extends StatefulWidget {
@@ -16,29 +18,50 @@ enum _TransactionState {
 }
 
 List<Widget> generateIncome() {
-  return <Widget>[
-    IncomeCard(
-      amount: 100000,
-      isCashback: true,
-      title: 'Pizza Hut',
-      cashback: 10000,
-    ),
-    IncomeCard(
-      amount: 100000,
-      title: 'Top Up',
-      isCashback: false,
-    ),
-  ];
+  List<IncomeCard> ret = List<IncomeCard>();
+  for (int i = 0; i < IncomeMock.list.length; i++) {
+    if (IncomeMock.list[i].userid == UserMock.currentLoggedInUser) {
+      var inc = IncomeMock.list[i];
+      if (inc.amount != null && inc.amount > 0 ||
+          inc.cashback != null && inc.cashback > 0) {
+        ret.add(IncomeCard(
+          title: inc.title != null ? inc.title : 'Unknown',
+          amount: inc.amount != null && inc.amount > 0
+              ? inc.amount
+              : (inc.outAmount != null ? inc.outAmount : 0),
+          cashback: inc.cashback != null ? inc.cashback : 0,
+          isCashback: inc.cashback != null ? inc.cashback > 0 : false,
+        ));
+      }
+    }
+  }
+  return ret.reversed.toList();
 }
 
 List<Widget> generateOutcome() {
-  return <Widget>[
-    IncomeCard(
-      amount: 100000,
-      title: 'Pizza Hut',
-      isCashback: false,
-    ),
-  ];
+  List<IncomeCard> ret = List<IncomeCard>();
+  for (int i = 0; i < IncomeMock.list.length; i++) {
+    if (IncomeMock.list[i].userid == UserMock.currentLoggedInUser) {
+      var inc = IncomeMock.list[i];
+      if (inc.outAmount != null && inc.outAmount > 0) {
+        ret.add(IncomeCard(
+          title: inc.title != null ? inc.title : 'Unknown',
+          amount: inc.outAmount,
+          isCashback: false,
+        ));
+      }
+
+      if (inc.outCashback != null && inc.outCashback > 0) {
+        ret.add(IncomeCard(
+          title: inc.title != null ? inc.title : 'Unknown',
+          amount: inc.outCashback,
+          isCashback: false,
+        ));
+      }
+    }
+  }
+
+  return ret.reversed.toList();
 }
 
 class _Transaction extends State<Transaction> {
@@ -98,13 +121,12 @@ class _Transaction extends State<Transaction> {
               Container(
                 child: Column(
                   children: [
-                    for (int i = 0; i < 10; i++)
-                      Container(
-                        width: double.infinity,
-                        child: TransactionList(
-                          items: items,
-                        ),
-                      )
+                    Container(
+                      width: double.infinity,
+                      child: TransactionList(
+                        items: items,
+                      ),
+                    )
                   ],
                 ),
               )

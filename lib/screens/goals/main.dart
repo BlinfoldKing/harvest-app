@@ -3,7 +3,13 @@ import 'package:harvest_app/components/general/appBar.dart';
 import 'package:harvest_app/components/general/harvestButton.dart';
 import 'package:harvest_app/components/input/dropdownInput.dart';
 import 'package:harvest_app/components/input/textInput.dart';
+import 'package:harvest_app/entity/goal.dart';
+import 'package:harvest_app/mock/goal.mock.dart';
+import 'package:harvest_app/mock/user.mock.dart';
+import 'package:harvest_app/screens/auth/pin.dart';
+import 'package:harvest_app/screens/home/main.dart';
 import 'package:harvest_app/utils/theme.dart';
+import 'package:nanoid/nanoid.dart';
 
 class Goals extends StatefulWidget {
   @override
@@ -12,6 +18,11 @@ class Goals extends StatefulWidget {
 
 class _Goals extends State<Goals> {
   final _formKey = GlobalKey<FormState>();
+
+  String title;
+  int targetValue;
+  int timeVal;
+  String timeUnit;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +50,9 @@ class _Goals extends State<Goals> {
                         return 'Please enter some text';
                       }
                     },
+                    onChanged: (value) {
+                      this.title = value;
+                    },
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 10, bottom: 5, top: 20),
@@ -51,6 +65,9 @@ class _Goals extends State<Goals> {
                       if (value.isEmpty) {
                         return 'Please enter some text';
                       }
+                    },
+                    onChanged: (value) {
+                      this.targetValue = int.tryParse(value);
                     },
                   ),
                   Container(
@@ -73,6 +90,9 @@ class _Goals extends State<Goals> {
                               return 'not a valid integer';
                             }
                           },
+                          onChanged: (value) {
+                            this.timeVal = int.tryParse(value);
+                          },
                         ),
                       ),
                       Padding(
@@ -80,28 +100,32 @@ class _Goals extends State<Goals> {
                       ),
                       Expanded(
                         child: HarvestDropdownInputForm(
-                          onChanged: (value) {},
+                          onChanged: (value) {
+                            setState(() {
+                              this.timeUnit = value;
+                            });
+                          },
                           items: [
-                            DropdownMenuItem<int>(
+                            DropdownMenuItem<String>(
                               child: Text(
                                 'Tahun',
                                 style: TextStyle(fontSize: 14),
                               ),
-                              value: 1,
+                              value: 'Tahun',
                             ),
-                            DropdownMenuItem<int>(
+                            DropdownMenuItem<String>(
                               child: Text(
                                 'Bulan',
                                 style: TextStyle(fontSize: 14),
                               ),
-                              value: 2,
+                              value: 'Bulan',
                             ),
-                            DropdownMenuItem<int>(
+                            DropdownMenuItem<String>(
                               child: Text(
                                 'Hari',
                                 style: TextStyle(fontSize: 14),
                               ),
-                              value: 3,
+                              value: 'Hari',
                             ),
                           ],
                         ),
@@ -138,7 +162,25 @@ class _Goals extends State<Goals> {
                 color: HarvestTheme.purple,
                 onPressed: () {
                   if (_formKey.currentState.validate()) {
-                    Navigator.popUntil(context, (route) => route.isFirst);
+                    var g = Goal();
+                    g.userid = UserMock.currentLoggedInUser;
+                    g.id = nanoid();
+                    g.currValue = 0;
+                    g.targetValue = this.targetValue;
+                    g.timeUnit = this.timeUnit;
+                    g.timeVal = this.timeVal;
+                    g.title = this.title;
+
+                    GoalMock.list.add(g);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Homepage();
+                        },
+                      ),
+                      (route) => route.isCurrent,
+                    );
                   }
                 },
               ),

@@ -3,20 +3,30 @@ import 'package:flutter/material.dart';
 class HarvestTextInputForm extends StatelessWidget {
   final String label;
 
+  bool obscureText = false;
   Function(String) validator = (value) {};
   Function(String) onChanged = (value) {};
   TextInputType keyboardType = TextInputType.text;
+  Widget prefixIcon;
 
-  HarvestTextInputForm(
-      {this.label, this.validator, this.onChanged, this.keyboardType});
+  HarvestTextInputForm({
+    this.label,
+    this.validator,
+    this.onChanged,
+    this.keyboardType,
+    this.prefixIcon,
+    this.obscureText,
+  });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: this.obscureText != null ? this.obscureText : false,
       onChanged: this.onChanged,
       validator: this.validator,
       keyboardType: this.keyboardType,
       decoration: InputDecoration(
+        prefixIcon: this.prefixIcon,
         hintText: this.label,
         contentPadding: EdgeInsets.symmetric(
           vertical: 17,

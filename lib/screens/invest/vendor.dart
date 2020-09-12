@@ -7,8 +7,9 @@ import 'package:harvest_app/utils/theme.dart';
 
 class Vendor extends StatelessWidget {
   final String vendorId;
+  final String goalId;
 
-  Vendor({this.vendorId});
+  Vendor({this.vendorId, this.goalId});
 
   @override
   Widget build(BuildContext context) {
@@ -286,6 +287,7 @@ class Vendor extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => Checkout(
                         vendorId: this.vendorId,
+                        goalId: this.goalId,
                       ),
                     ),
                   );

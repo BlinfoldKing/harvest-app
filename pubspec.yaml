@@ -28,6 +28,8 @@ dependencies:
   outline_material_icons: ^0.1.1
   percent_indicator: ^2.1.6
   pinput: ^0.2.5
+  url_launcher: ^5.5.3
+  nanoid: ^0.1.0
 
 
   # The following adds the Cupertino Icons font to your application.

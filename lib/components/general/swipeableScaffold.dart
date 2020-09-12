@@ -102,8 +102,6 @@ class _SwipeableScaffold extends State<SwipeableScaffold> {
                 this.enableAppBar = enableAppBar;
               });
             });
-
-            print(">> $this.enableAppBar");
           }
         },
         children: this.pages,
